@@ -1,2 +1,2 @@
 
-![VISION 2035의 사본의 사본의 사본](https://github.com/user-attachments/assets/a0dbfbb9-aa58-4b67-9d7a-df395feb4257)
+![VISION 2035의 사본의 사본의 사본](https://github.com/user-attachments/assets/4e737d58-5f01-4257-969c-13f5f98d19f4)
