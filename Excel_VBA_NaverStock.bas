@@ -1,8 +1,8 @@
 ' ============================================================
 ' RISE 200위클리커버드콜
 ' ============================================================
-Function GetRise200Nav(Optional field As String = "price") As Variant
-    GetRise200Nav = GetNaverFinanceData("490070", field)
+Function GetRISE200Nav(Optional field As String = "price") As Variant
+    GetRISE200Nav = GetNaverFinanceData("475720", field)
 End Function
 ' ============================================================
 ' ACE KRX 금현물
