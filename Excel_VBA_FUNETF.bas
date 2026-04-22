@@ -1,8 +1,19 @@
 ' ============================================================
+' KCGI피델리티한미AI테크증권자투자신탁 Ae
+' ============================================================
+Function GetKCGIAINav(Optional field As String = "nav") As Variant
+    GetKCGIAINav = GetFunETFNav("K55365D69567", field)
+End Function
+' ============================================================
+' KCGI글로벌고배당증권자투자신탁 Ae
+' ============================================================
+Function GetKCGIGlobalBaedangNav(Optional field As String = "nav") As Variant
+    GetKCGIGlobalBaedangNav = GetFunETFNav("K55365D69567", field)
+End Function
+' ============================================================
 ' KCGI글로벌성장기반증권자투자신탁[주식]종류Ce
 ' ============================================================
 Function GetKCGIGlobalNav(Optional field As String = "nav") As Variant
-    ' 함수명 중복 해결 및 반환값 이름 일치
     GetKCGIGlobalNav = GetFunETFNav("K55365C12668", field)
 End Function
 
