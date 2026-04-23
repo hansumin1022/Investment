@@ -21,7 +21,6 @@ End Function
 ' 미래에셋다이와일본밸류중소형증권자투자신탁
 ' ============================================================
 Function GetMiraeJapanNav(Optional field As String = "nav") As Variant
-    ' Janpan -> Japan 오타 수정
     GetMiraeJapanNav = GetFunETFNav("K55301B59682", field)
 End Function
 
@@ -40,7 +39,7 @@ Function GetMiraeChinaNav(Optional field As String = "nav") As Variant
 End Function
 
 ' ============================================================
-' 공통 파싱 함수 (FunETF 기반 - 모든 펀드 공유)
+' 공통 파싱 함수 (FunETF)
 ' ============================================================
 Function GetFunETFNav(standardCd As String, Optional field As String = "nav") As Variant
 
@@ -79,7 +78,6 @@ Function GetFunETFNav(standardCd As String, Optional field As String = "nav") As
                 GetFunETFNav = "등락패턴불일치"
             End If
         Case "change_pct"
-            ' 마이너스(-), 플러스(+) 부호까지 인식하도록 정규식 개선
             re.Pattern = "\(([+-]?[\d\.]+)%\)"
             Set m = re.Execute(html)
             If m.Count > 0 Then
