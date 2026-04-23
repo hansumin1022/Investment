@@ -12,7 +12,7 @@ Function GetACEGoldNav(Optional field As String = "price") As Variant
 End Function
 
 ' ============================================================
-' 공통 파싱 함수
+' 공통 파싱 함수 (네이버 증권 기반)
 ' ============================================================
 Function GetNaverFinanceData(itemCode As String, Optional field As String = "price") As Variant
     Dim xml As Object, html As String, re As Object, m As Object
@@ -23,7 +23,7 @@ Function GetNaverFinanceData(itemCode As String, Optional field As String = "pri
     xml.Open "GET", url, False
     xml.send
     
-    ' 바이너리 데이터를 텍스트로 변환 (EUC-KR)
+    ' 바이너리 데이터 to 텍스트 변환 (EUC-KR)
     html = ConvertEucKrToUtf8(xml.responseBody)
 
     Set re = CreateObject("VBScript.RegExp")
@@ -32,23 +32,20 @@ Function GetNaverFinanceData(itemCode As String, Optional field As String = "pri
 
     Select Case LCase(Trim(field))
         Case "price", "nav"
-            ' "현재가" 글자 대신 HTML 클래스 구조(no_today)를 찾아 숫자 추출
             re.Pattern = "no_today[\s\S]*?blind"">([\d,]+)"
             Set m = re.Execute(html)
             If m.Count > 0 Then
                 GetNaverFinanceData = CDbl(Replace(m(0).SubMatches(0), ",", ""))
             Else
-                GetNaverFinanceData = 0 ' 에러 메시지 대신 0 반환 (형식 오류 방지)
+                GetNaverFinanceData = 0
             End If
             
         Case "change"
-            ' 전일대비 금액 추출 (no_exday 클래스 내부 blind 태그)
             re.Pattern = "no_exday[\s\S]*?blind"">([\d,]+)"
             Set m = re.Execute(html)
             If m.Count > 0 Then
                 Dim val As Double
                 val = CDbl(Replace(m(0).SubMatches(0), ",", ""))
-                ' 하락/상승 화살표 판단 (ico down이 있으면 마이너스 처리)
                 If InStr(html, "ico down") > 0 Then val = val * -1
                 GetNaverFinanceData = val
             Else
@@ -56,11 +53,10 @@ Function GetNaverFinanceData(itemCode As String, Optional field As String = "pri
             End If
             
         Case "change_pct"
-            ' 등락률 추출
             re.Pattern = "n_chg[\s\S]*?blind"">([+-]?[\d\.]+)%"
             Set m = re.Execute(html)
             If m.Count > 0 Then
-                GetNaverFinanceData = CDbl(m(0).SubMatches(0)) / 100 ' 엑셀 백분율 형식 대응
+                GetNaverFinanceData = CDbl(m(0).SubMatches(0)) / 100
             Else
                 GetNaverFinanceData = 0
             End If
